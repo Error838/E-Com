@@ -1,0 +1,258 @@
+{
+	"info": {
+		"_postman_id": "e2462fbe-5a14-48d0-ac2f-ae88771ac018",
+		"name": "E-Com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28346861"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"user2\",\n  \"password\": \"123\",\n  \"email\": \"user2@zenatix.com\",\n  \"first_name\": \"User\",\n  \"last_name\": \"2\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:1234/register/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "1234",
+					"path": [
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"user2\",\n    \"password\": \"123\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:1234/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1234",
+					"path": [
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1234/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1234",
+					"path": [
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Testcase: User List API",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response should be a valid JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response should contain an array of users\", function () {",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.be.an(\"array\");",
+							"    pm.expect(responseBody.length).to.be.above(0); // Assuming there should be at least one user",
+							"});",
+							"",
+							"pm.test(\"Each user should have the required fields\", function () {",
+							"    const responseBody = pm.response.json();",
+							"    responseBody.forEach(function (user) {",
+							"        pm.expect(user).to.have.property(\"id\");",
+							"        pm.expect(user).to.have.property(\"username\");",
+							"        pm.expect(user).to.have.property(\"email\");",
+							"        pm.expect(user).to.have.property(\"phone\");",
+							"        pm.expect(user).to.have.property(\"address\");",
+							"        pm.expect(user).to.have.property(\"role\");",
+							"        pm.expect(user).to.have.property(\"first_name\");",
+							"        pm.expect(user).to.have.property(\"last_name\");",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:1234/api/users/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "1234",
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Testcase: Order List API",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response should be a valid JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response should contain an array of orders\", function () {",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.be.an(\"array\");",
+							"    pm.expect(responseBody.length).to.be.above(0); // Assuming there should be at least one order",
+							"});",
+							"",
+							"pm.test(\"Each order should have the required fields\", function () {",
+							"    const responseBody = pm.response.json();",
+							"    responseBody.forEach(function (order) {",
+							"        pm.expect(order).to.have.property(\"id\");",
+							"        pm.expect(order).to.have.property(\"user\");",
+							"        pm.expect(order).to.have.property(\"cart_items\");",
+							"        pm.expect(order).to.have.property(\"status\");",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"Each cart item in the order should have the required fields\", function () {",
+							"    const responseBody = pm.response.json();",
+							"    responseBody.forEach(function (order) {",
+							"        order.cart_items.forEach(function (cartItem) {",
+							"            pm.expect(cartItem).to.have.property(\"id\");",
+							"            pm.expect(cartItem).to.have.property(\"product\");",
+							"            pm.expect(cartItem).to.have.property(\"quantity\");",
+							"        });",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:1234/api/orders/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "1234",
+					"path": [
+						"api",
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:1234/products/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "1234",
+					"path": [
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
