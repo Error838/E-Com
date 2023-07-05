@@ -26,4 +26,12 @@ router.register(r'orders', views.OrderViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('products/', views.get_available_products, name='get_available_products'),
+    path('register/', views.register_user, name='register_user'),
+    path('login/', views.login, name='login'),
+    path('cart/add/', views.add_to_cart, name='add_to_cart'),
+    path('cart/update/', views.update_cart, name='update_cart'),
+    path('cart/remove/', views.remove_from_cart, name='remove_from_cart'),
+    path('orders/place/', views.place_order, name='place_order'),
+    path('orders/history/', views.order_history, name='order_history'),
 ]
